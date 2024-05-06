@@ -1,0 +1,60 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "Result";
+    List<Person> personList = null;
+
+    if (Model is List<Person>)
+    {
+        personList = Model;
+    }
+    else if (Model is Person)
+    {
+        personList = new List<Person> { (Person)Model };
+    }
+}
+
+<h1>Result</h1>
+
+@if (personList != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Phone Number</th>
+                <th>Birth Place</th>
+                <th>Is Graduated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in personList)
+            {
+                <tr>
+                    <td>@person.FirstName</td>
+                    <td>@person.LastName</td>
+                    <td>@person.Gender</td>
+                    <td>@person.DateOfBirth.ToShortDateString()</td>
+                    <td>@person.PhoneNumber</td>
+                    <td>@person.BirthPlace</td>
+                    <td>@person.IsGraduated</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model is List<string>)
+{
+    <ul>
+        @foreach (var fullName in Model)
+        {
+            <li>@fullName</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Invalid data</p>
+}

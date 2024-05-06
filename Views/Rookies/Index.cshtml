@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Asp_MVC1.Models.Person>
+@{
+    ViewData["Title"] = "Rookies";
+}
+
+<h1>Rookies</h1>
+<div>
+    <form method="post" action="@Url.Action("HandleOption", "Rookies")">
+        <select name="option">
+            <option value="1">Option 1: List of Male Members</option>
+            <option value="2">Option 2: Oldest Member</option>
+            <option value="3">Option 3: Full Names</option>
+            <option value="4">Option 4: Members Born in 2000</option>
+            <option value="5">Option 5: Members Born After 2000</option>
+            <option value="6">Option 6: Members Born Before 2000</option>
+            <option value="7">Option 7: Export to Excel</option>
+        </select>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>Birth Place</th>
+            <th>Is Graduated</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>@person.FirstName</td>
+                <td>@person.LastName</td>
+                <td>@person.Gender</td>
+                <td>@person.DateOfBirth.ToShortDateString()</td>
+                <td>@person.PhoneNumber</td>
+                <td>@person.BirthPlace</td>
+                <td>@person.IsGraduated</td>
+            </tr>
+        }
+    </tbody>
+</table>
