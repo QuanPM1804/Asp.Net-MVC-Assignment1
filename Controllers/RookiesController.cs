@@ -1,9 +1,10 @@
-﻿using OfficeOpenXml;
+using OfficeOpenXml;
 using Asp_MVC1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Asp_MVC1.Controllers
 {
+    [Route("NashTech/Rookies")]
     public class RookiesController : Controller
     {
         private static List<Person> persons = new List<Person>
@@ -12,33 +13,36 @@ namespace Asp_MVC1.Controllers
             new Person { FirstName = "Van B", LastName = "Nguyen", Gender = "Male", DateOfBirth = new DateTime(1999, 6, 20), PhoneNumber = "9876543210", BirthPlace = "Sai Gon", IsGraduated = false },
             new Person { FirstName = "Thi C", LastName = "Nguyen", Gender = "Female", DateOfBirth = new DateTime(2001, 6, 20), PhoneNumber = "9876543210", BirthPlace = "Sai Gon", IsGraduated = false },
         };
+        [HttpGet]
         public IActionResult Index()
         {
             return View(persons);
         }
+        [HttpGet("MaleMembers")]
         public IActionResult MaleMembers()
         {
             var maleMembers = persons.Where(p => p.Gender == "Male").ToList();
             return View("Result", maleMembers);
         }
-
+        [HttpGet("OldestMember")]
         public IActionResult OldestMember()
         {
             var oldestMember = persons.OrderBy(p => p.DateOfBirth).FirstOrDefault();
             return View("Result", oldestMember);
         }
-
+        [HttpGet("FullNames")]
         public IActionResult FullNames()
         {
             var fullNames = persons.Select(p => $"{p.LastName} {p.FirstName}").ToList();
             return View("Result", fullNames);
         }
-
+        [HttpGet("FilterByBirthYear")]
         public IActionResult FilterByBirthYear(int year)
         {
             var filteredMembers = persons.Where(p => p.DateOfBirth.Year == year).ToList();
             return View("Result", filteredMembers);
         }
+        [HttpGet("ExportToExcel")]
         public IActionResult ExportToExcel()
         {
             var stream = new MemoryStream();
